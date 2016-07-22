@@ -1,18 +1,12 @@
 import requests
 import json
+import time
+import pymongo
 from bs4 import  BeautifulSoup
 
-# url = 'http://tu.duowan.com/tag/5037.html'
-# duowan_data = requests.get(url)
-# duowan_urllist=[]
-# duowan_id = []
-# soup = BeautifulSoup(duowan_data.text,'lxml')
-# duowan_urllabel = soup.select('#pic-list > li > em > a')
-# for duowan_url in soup.select('#pic-list > li > em > a'):
-#     duowan_urllist.append(duowan_url.get('href'))
-# #
-# for duowan_ID in duowan_urllist:
-#     duowan_id.append(duowan_ID.split('/')[-1].split('.')[0])
+client =pymongo.MongoClient('localhost',27017)
+duowan = client['duowan']
+duowan_jiongtu = duowan['duowan_jiongtu']
 def get_url(url):
     duowan_data = requests.get(url)
     duowan_urllist = []
@@ -38,8 +32,9 @@ def get_data(gid,data=None):
         }
         print data
 
+
 for id in get_id('http://tu.duowan.com/tag/5037.html'):
-    get_data(id)
-# ding = respones.json()['picInfo'][1]['ding']
-# url = 'http://tu.duowan.com/gallery/126187.html'''
-# print url.split('/')[-1].split('.')[0]
+    print get_data(id)
+    # duowan_jiongtu.insert_one(get_data(id))
+# for item in duowan_jiongtu.find():
+#     print item['ding']
